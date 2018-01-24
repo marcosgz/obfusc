@@ -3,7 +3,9 @@
 module Obfusc
   # This model receive and process ARGV from ./exe/obfusc script
   class CLI
-    VALID_COMMANDS = %w[setup crypt decrypt tree].freeze
+    VALID_COMMANDS = %w[setup crypt decrypt].freeze
+
+    attr_reader :argumetns, :options
 
     def initialize(arguments)
       @arguments = arguments
@@ -12,9 +14,16 @@ module Obfusc
 
     def run
       configure
+      perform(@arguments.shift)
     end
 
     protected
+
+    def perform(command)
+      return unless VALID_COMMANDS.include?(command)
+      class_name = "#{command[0].upcase}#{command[1..-1]}Command"
+      Obfusc.const_get(class_name).call(self)
+    end
 
     # rubocop:disable BlockLength,MethodLength,AbcSize
     def configure
