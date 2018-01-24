@@ -19,10 +19,13 @@ module Obfusc
     private_class_method def self.randonize!(memo, source)
       source.sort_by { rand }.each do |char|
         list = source - (memo.values & source)
-        list.reverse!
-        list.delete(char) if list.include?(char) && list.size > 1
-        memo[char] = list.sample
+        loop do
+          memo[char] = list.sample
+          break if list.size <= 1
+          break if memo[char] != char
+        end
       end
+      memo
     end
   end
 end

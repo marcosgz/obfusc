@@ -10,4 +10,28 @@ RSpec.describe Obfusc::Random do
       end
     end
   end
+
+  describe '.randonize!' do
+    subject { Obfusc::Random.send(:randonize!, memo, collection) }
+
+    let(:memo) { {} }
+
+    context 'with an empty array' do
+      let(:collection) { [] }
+
+      it { is_expected.to eq({}) }
+    end
+
+    context 'with only one entry' do
+      let(:collection) { [:a] }
+
+      it { is_expected.to eq(a: :a) }
+    end
+
+    context 'with two or more entries' do
+      let(:collection) { %i[a b] }
+
+      it { is_expected.to eq(a: :b, b: :a) }
+    end
+  end
 end
