@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'optparse'
 require 'obfusc/cli'
 require 'obfusc/version'
 require 'obfusc/random'
