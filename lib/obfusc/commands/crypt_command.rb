@@ -3,6 +3,6 @@
 module Obfusc
   # Perform tasks related `crypt` command
   class CryptCommand
-    def self.call(_cli); end
+    def self.call(_config); end
   end
 end

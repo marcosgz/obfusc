@@ -21,13 +21,13 @@ RSpec.describe Obfusc::CLI do
     context 'with abreviated config file' do
       let(:args) { ['-c', '~/.obfusc'] }
 
-      it { is_expected.to eq(config: '~/.obfusc') }
+      it { is_expected.to eq(config_path: '~/.obfusc') }
     end
 
     context 'with config file' do
       let(:args) { ['--config', '~/.obfusc'] }
 
-      it { is_expected.to eq(config: '~/.obfusc') }
+      it { is_expected.to eq(config_path: '~/.obfusc') }
     end
 
     context 'with verbose' do

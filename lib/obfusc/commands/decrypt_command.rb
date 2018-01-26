@@ -3,6 +3,6 @@
 module Obfusc
   # Perform tasks related `decrypt` command
   class DecryptCommand
-    def self.call(_cli); end
+    def self.call(_config); end
   end
 end

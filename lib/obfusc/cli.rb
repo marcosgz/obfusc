@@ -21,8 +21,9 @@ module Obfusc
 
     def perform(command)
       return unless VALID_COMMANDS.include?(command)
+      config = Obfusc::Config.new(@options)
       class_name = "#{command[0].upcase}#{command[1..-1]}Command"
-      Obfusc.const_get(class_name).call(self)
+      Obfusc.const_get(class_name).call(config)
     end
 
     # rubocop:disable BlockLength,MethodLength,AbcSize
@@ -40,7 +41,7 @@ module Obfusc
 
         opts.on('-c', '--config FILENAME',
                 'Using a different ".obfusc.cnf" filename') do |filename|
-          @options[:config] = filename
+          @options[:config_path] = filename
         end
 
         opts.on(
