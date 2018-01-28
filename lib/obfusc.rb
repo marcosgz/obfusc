@@ -2,9 +2,11 @@
 
 require 'optparse'
 require 'yaml'
+require 'fileutils'
 
 require 'obfusc/cli'
 require 'obfusc/config'
+require 'obfusc/encryptor'
 require 'obfusc/random'
 require 'obfusc/version'
 

@@ -1,4 +1,17 @@
+require 'spec_helper'
+
 RSpec.describe Obfusc::CLI do
+  describe '.run' do
+    pending 'with setup' do
+    end
+
+    pending 'with crypt' do
+    end
+
+    pending 'with decrypt' do
+    end
+  end
+
   describe '.options' do
     subject do
       described_class.new(args).tap do |model|

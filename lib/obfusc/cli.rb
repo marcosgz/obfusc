@@ -23,7 +23,7 @@ module Obfusc
       return unless VALID_COMMANDS.include?(command)
       config = Obfusc::Config.new(@options)
       class_name = "#{command[0].upcase}#{command[1..-1]}Command"
-      Obfusc.const_get(class_name).call(config)
+      Obfusc.const_get(class_name).call(config, *@arguments)
     end
 
     # rubocop:disable BlockLength,MethodLength,AbcSize
@@ -54,6 +54,14 @@ module Obfusc
 
         opts.on('-v', '--[no-]verbose', 'Run verbosely') do |v|
           @options[:verbose] = v
+        end
+
+        opts.on(
+          '-s',
+          '--[no-]simulate',
+          'Do a simulate run without executing actions'
+        ) do |v|
+          @options[:simulate] = v
         end
 
         opts.separator ''

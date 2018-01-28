@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 RSpec.describe Obfusc::DecryptCommand do
   describe '.call' do
     specify do

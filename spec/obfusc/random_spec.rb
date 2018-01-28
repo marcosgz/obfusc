@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 RSpec.describe Obfusc::Random do
   describe '.generate!' do
     subject { described_class.generate! }
