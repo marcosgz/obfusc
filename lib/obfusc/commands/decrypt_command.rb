@@ -27,8 +27,13 @@ module Obfusc
     protected
 
     def files
-      Dir.glob(@from).each_with_object({}) do |relative_path, memo|
-        memo[relative_path] = @config.endecryptor.endecrypt(relative_path)
+      recursive_from = File.join(@from, '**/{.*,*}') if File.directory?(@from)
+      Dir.glob(recursive_from || @from).each_with_object({}) do |path, memo|
+        next if File.directory?(path)
+        next if File.symlink?(path)
+        basename = File.basename(path)
+        next unless @config.encryptor.obfuscated?(basename)
+        memo[path] = File.join(@to, @config.encryptor.decrypt(basename))
       end
     end
   end

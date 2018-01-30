@@ -14,6 +14,14 @@ RSpec.describe Obfusc::Encryptor do
     allow(config).to receive(:token).and_return(token)
   end
 
+  describe '.encrypted?' do
+    let(:model) { described_class.new(config) }
+
+    it { expect(model.obfuscated?('obfusc__foo.obfusc')).to be true }
+    it { expect(model.obfuscated?('ofusc__foo.ofusc')).to be false }
+    it { expect(model.obfuscated?(nil)).to be false }
+  end
+
   describe '.encrypt' do
     let(:model) { described_class.new(config) }
 
@@ -67,6 +75,12 @@ RSpec.describe Obfusc::Encryptor do
       encrypted = 'obfusc__YNHUYVA___|___ULWHAJFUV.obfusc'
       decrypted = model.decrypt("directory/before/#{encrypted}")
       expect(decrypted).to eq('directory/before/already/encrypted')
+    end
+
+    it 'ignores directoires that does not match with obfuscation pattern' do
+      encrypted = 'bfusc__YNHUYVA___|___ULWHAJFUV.obfus'
+      decrypted = model.decrypt(encrypted)
+      expect(decrypted).to eq(encrypted)
     end
   end
 

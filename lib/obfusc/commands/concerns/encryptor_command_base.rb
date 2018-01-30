@@ -5,11 +5,13 @@ module Obfusc
   # Children models only overwrite `show_usage` and files.
   class EncryptorCommandBase
     COMMANDS = %w[move copy].freeze
+    CURRENT_DIR = './'.freeze
 
     def initialize(config, from, to)
       @config = config
-      @from = from
-      @to = to
+
+      @from = from || CURRENT_DIR
+      @to = to || CURRENT_DIR
     end
 
     def self.call(config, *args)
@@ -28,33 +30,44 @@ module Obfusc
     end
 
     def move
-      files.each do |from, to|
-        create_dir(to)
+      files.each_with_index do |(from, to), index|
+        create_target_base_directory if index.zero?
+        create_directory_from_file(to)
         @config.log("mv #{from} #{to}")
         @config.dry_run do
-          FileUtils.mv(from, file_to, verbose: @config.verbose?)
+          FileUtils.mv(from, to, verbose: @config.verbose?)
         end
-      end
+      end.size
     end
 
     def copy
-      files.each do |from, to|
-        create_dir(to)
+      files.each_with_index do |(from, to), index|
+        create_target_base_directory if index.zero?
+        create_directory_from_file(to)
         @config.log("cp #{from} #{to}")
         @config.dry_run do
-          FileUtils.cp(from, file_to, verbose: @config.verbose?)
+          FileUtils.cp(from, to, verbose: @config.verbose?)
         end
-      end
+      end.size
     end
 
     protected
 
-    def create_dir(path)
+    def create_directory_from_file(path)
+      return if File.directory?(path)
       dirname = File.dirname(path)
-      return unless File.exist?(dirname)
+      return if File.expand_path(dirname) == File.expand_path(@to)
 
       @config.log("mkdir -p #{dirname}")
       @config.dry_run { FileUtils.mkdir_p(dirname) }
+    end
+
+    def create_target_base_directory
+      return if @to == CURRENT_DIR
+      return if File.directory?(@to)
+
+      @config.log("mkdir -p #{@to}")
+      @config.dry_run { FileUtils.mkdir_p(@to) }
     end
   end
 end

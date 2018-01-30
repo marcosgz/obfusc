@@ -2,13 +2,38 @@ require 'spec_helper'
 
 RSpec.describe Obfusc::CLI do
   describe '.run' do
-    pending 'with setup' do
+    let(:model) { described_class.new(args) }
+    let(:config) { double }
+
+    before do
+      allow(Obfusc::Config).to receive(:new).and_return(config)
     end
 
-    pending 'with crypt' do
+    describe 'with setup' do
+      let(:args) { ['setup', 'generate', '-v'] }
+
+      specify do
+        expect(Obfusc::SetupCommand).to receive(:call).with(config, 'generate')
+        model.run
+      end
     end
 
-    pending 'with decrypt' do
+    describe 'with crypt' do
+      let(:args) { ['crypt', 'copy', '-v'] }
+
+      specify do
+        expect(Obfusc::CryptCommand).to receive(:call).with(config, 'copy')
+        model.run
+      end
+    end
+
+    describe 'with decrypt' do
+      let(:args) { ['decrypt', 'move', '-v'] }
+
+      specify do
+        expect(Obfusc::DecryptCommand).to receive(:call).with(config, 'move')
+        model.run
+      end
     end
   end
 

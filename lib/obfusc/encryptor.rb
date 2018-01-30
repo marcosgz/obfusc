@@ -24,6 +24,10 @@ module Obfusc
       expand_path_for_decrypt(path).join(SEP_FROM)
     end
 
+    def obfuscated?(file)
+      !!(file =~ obfuscated_expression)
+    end
+
     protected
 
     def expand_path_for_encrypt(path)
@@ -37,7 +41,7 @@ module Obfusc
     def expand_path_for_decrypt(path, memo = [])
       return memo if String(path).length.zero?
 
-      if path =~ encrypted_expression
+      if path =~ obfuscated_expression
         parts = normalize(path).split(SEP_TO)
         return [*memo, *parts.map { |part| decrypt_segment(part) }]
       end
@@ -51,11 +55,11 @@ module Obfusc
     end
 
     def try_decrypt(step)
-      return step unless step =~ encrypted_expression
+      return step unless step =~ obfuscated_expression
       decrypt(step)
     end
 
-    def encrypted_expression
+    def obfuscated_expression
       /^(#{Regexp.escape(@prefix)}).*(#{Regexp.escape(@suffix)})$/
     end
 
