@@ -50,6 +50,7 @@ obfusc <command> <arguments> <options>
 ```
 -c, --config FILENAME            Using a different ".obfusc.cnf" filename (Default to $HOME/.obfusc.cnf)
 -e, --extension STRING           Specify a custom file extension. (Default to "obfc")
+-p, --prefix STRING              Specify a custom file prefix. (Default to "obfc")
 -v, --[no-]verbose               Run verbosely
 -s, --[no-]simulate              Do a simulate run without executing actions
 ```
