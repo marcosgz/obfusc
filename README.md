@@ -54,3 +54,48 @@ obfusc <command> <arguments> <options>
 -v, --[no-]verbose               Run verbosely
 -s, --[no-]simulate              Do a simulate run without executing actions
 ```
+
+### Crypt command
+
+`crypt` is the command used to obfuscated one or more files. Should always be followed by `<move OR copy>` and `<source>` and an optional `<target>`.
+
+Example:
+```
+# Simulate what will happen by executing this command
+$ obfusc crypt copy -v -s empty.gif
+DEBUG: cp empty.gif ./obfusc__6GP5D.nHv.obfusc
+
+# Obfuscate the "empty.gif" file with the `copy` mode.
+$ obfusc crypt copy empty.gif
+
+# Show obfuscated file
+$ obfusc show ./
+./obfusc__6GP5D.nHv.obfusc:
+---> empty.gif
+
+# `copy` always keep the original file
+$ ls empty.gif
+empty.gif
+```
+
+### Decrypt command
+`decrypt` is the command used to revert to original filename one or more obfuscated files. Should always be followed by `<move OR copy>` and `<source>` and an optional `<target>`.
+
+Example:
+```
+# Simulate what will happen by executing this command
+$ obfusc decrypt copy -s -v ./ /tmp/target
+DEBUG: mkdir -p /tmp/target
+DEBUG: cp ./obfusc__6GP5D.nHv.obfusc /tmp/target/empty.gif
+
+# Rename obfuscated file to the original name and copy to the target directory
+$ obfusc decrypt copy ./ /tmp/target
+
+# Show un-obfuscated file
+$ ls /tmp/target
+empty.gif
+
+# Original obfuscated file still existing with copy mode
+$ ls ./obfusc__6GP5D.nHv.obfusc
+./obfusc__6GP5D.nHv.obfusc
+```
