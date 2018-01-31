@@ -20,15 +20,22 @@ module Obfusc
     protected
 
     def perform(command)
-      return unless VALID_COMMANDS.include?(command)
+      unless VALID_COMMANDS.include?(command)
+        puts parser.help
+        return
+      end
       config = Obfusc::Config.new(@options)
       class_name = "#{command[0].upcase}#{command[1..-1]}Command"
       Obfusc.const_get(class_name).call(config, *@arguments)
     end
 
-    # rubocop:disable BlockLength,MethodLength,AbcSize
     def configure
-      parser = OptionParser.new do |opts|
+      parser.parse!(@arguments)
+    end
+
+    # rubocop:disable BlockLength,MethodLength,AbcSize
+    def parser
+      @parser = OptionParser.new do |opts|
         opts.banner = 'Usage: obfusc <command> <arguments> <options>'
         opts.separator ''
         opts.separator 'Commands:'
@@ -80,7 +87,6 @@ module Obfusc
           exit
         end
       end
-      parser.parse!(@arguments)
     end
     # rubocop:enable BlockLength,MethodLength,AbcSize
   end

@@ -8,6 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = Obfusc::VERSION
   spec.authors       = ['Marcos G. Zimmermann']
   spec.email         = ['mgzmaster@gmail.com']
+  spec.license       = 'MIT'
 
   spec.summary       = 'Obfuscate a recursive tree directory or a filename'
   spec.description   = 'Simple script to obfuscate a recursive tree directory' \
