@@ -3,7 +3,7 @@
 module Obfusc
   # This model receive and process ARGV from ./exe/obfusc script
   class CLI
-    VALID_COMMANDS = %w[setup crypt decrypt].freeze
+    VALID_COMMANDS = %w[setup crypt decrypt show].freeze
 
     attr_reader :argumetns, :options
 
