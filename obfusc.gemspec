@@ -10,9 +10,9 @@ Gem::Specification.new do |spec|
   spec.email         = ['mgzmaster@gmail.com']
   spec.license       = 'MIT'
 
-  spec.summary       = 'Obfuscate a recursive tree directory or a filename'
-  spec.description   = 'Simple script to obfuscate a recursive tree directory' \
-                       ' or a filename'
+  spec.summary       = 'Command line tool to obfuscate files'
+  spec.description   = 'Simple script to obfuscate one or more files' \
+                       ' preserving the directory tree'
   spec.homepage      = 'https://github.com/marcosgz/obfusc'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
