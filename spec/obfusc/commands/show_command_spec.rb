@@ -36,6 +36,15 @@ RSpec.describe Obfusc::ShowCommand do
         receive(:new).with(config, source).and_return(model)
     end
 
+    context 'without any directory' do
+      let(:source) { nil }
+
+      specify do
+        expect(model).to receive(:show_usage)
+        described_class.call(config, source)
+      end
+    end
+
     context 'with a invalid directory' do
       let(:source) { '/missing/directory' }
 

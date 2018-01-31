@@ -12,7 +12,7 @@ module Obfusc
     def self.call(config, *args)
       source = args.first
       model = new(config, source)
-      model.public_send(File.exist?(source) ? :run : :show_usage)
+      model.public_send(File.exist?(source.to_s) ? :run : :show_usage)
     end
 
     def run
