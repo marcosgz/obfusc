@@ -20,6 +20,20 @@ RSpec.describe Obfusc::Encryptor do
     it { expect(model.obfuscated?('obfusc__foo.obfusc')).to be true }
     it { expect(model.obfuscated?('ofusc__foo.ofusc')).to be false }
     it { expect(model.obfuscated?(nil)).to be false }
+
+    context 'with a custom file extension' do
+      before { config.extension = 'foo' }
+
+      it { expect(model.obfuscated?('obfusc__foo.foo')).to be true }
+      it { expect(model.obfuscated?('obfusc__foo.obfusc')).to be false }
+    end
+
+    context 'with a custom file prefix' do
+      before { config.prefix = 'foo' }
+
+      it { expect(model.obfuscated?('foo__xyz123.obfusc')).to be true }
+      it { expect(model.obfuscated?('obfusc__xyz123.obfusc')).to be false }
+    end
   end
 
   describe '.encrypt' do

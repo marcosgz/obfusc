@@ -52,7 +52,7 @@ RSpec.describe Obfusc::SetupCommand do
       expect { model.generate }.not_to raise_exception
       expect(File.exist?(path)).to be true
       config = YAML.load_file(path)
-      expect(config.keys).to match_array(%w[token secret])
+      expect(config.keys).to match_array(%w[prefix suffix token secret])
     end
 
     it 'fails to create a file when specified an invalid directory' do
@@ -73,6 +73,8 @@ RSpec.describe Obfusc::SetupCommand do
       specify do
         result = <<-YAML.gsub('        ', '')
         ---
+        prefix: obfusc
+        suffix: obfusc
         token: ''
         secret: ''
         YAML
@@ -90,6 +92,8 @@ RSpec.describe Obfusc::SetupCommand do
       specify do
         result = <<-YAML.gsub('        ', '')
         ---
+        prefix: obfusc
+        suffix: obfusc
         token: 'ab '
         secret: 'ab '
         YAML

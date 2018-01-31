@@ -56,6 +56,18 @@ RSpec.describe Obfusc::CLI do
       it { is_expected.to eq(extension: 'abc') }
     end
 
+    context 'with prefix' do
+      let(:args) { ['--prefix', 'abc'] }
+
+      it { is_expected.to eq(prefix: 'abc') }
+    end
+
+    context 'with abbreviated prefix' do
+      let(:args) { ['-p', 'abc'] }
+
+      it { is_expected.to eq(prefix: 'abc') }
+    end
+
     context 'with abreviated config file' do
       let(:args) { ['-c', '~/.obfusc'] }
 

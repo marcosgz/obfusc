@@ -46,7 +46,12 @@ module Obfusc
         token += key
         secret += value
       end
-      YAML.dump('token' => token, 'secret' => secret)
+      YAML.dump(
+        'prefix' => @config.prefix,
+        'suffix' => @config.extension,
+        'token' => token,
+        'secret' => secret
+      )
     end
 
     def config_file

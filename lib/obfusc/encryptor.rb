@@ -8,7 +8,7 @@ module Obfusc
 
     def initialize(config)
       @config = config
-      @prefix = "#{config.extension}__"
+      @prefix = "#{config.prefix}__"
       @suffix = ".#{config.extension}"
     end
 

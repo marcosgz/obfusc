@@ -48,8 +48,16 @@ module Obfusc
           '-e',
           '--extension STRING',
           'Specify a custom file extension. (Default to "obfc")'
-        ) do |filename|
-          @options[:extension] = filename
+        ) do |extension|
+          @options[:extension] = extension
+        end
+
+        opts.on(
+          '-p',
+          '--prefix STRING',
+          'Specify a custom file prefix. (Default to "obfc")'
+        ) do |prefix|
+          @options[:prefix] = prefix
         end
 
         opts.on('-v', '--[no-]verbose', 'Run verbosely') do |v|
